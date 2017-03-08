@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue</title>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+	<ul id="example-1">
+		<li v-for="item in items">
+			{{item.message}}
+		</li>
+	</ul>
+	<script type="text/javascript">
+		var example1 = new Vue({
+			el:'#example-1',
+			data:{
+				items:[
+					{message:'foo'},
+					{message:'bar'}
+				]
+			}
+		})
+	</script>
+	<ul id="example-2">
+		<li v-for="(item,index) in items">
+			{{parentMessage}} - {{index}} - {{item.message}}
+		</li>
+	</ul>
+	<script type="text/javascript">
+		var example2 = new Vue({
+			el: '#example-2',
+			data:{
+				parentMessage:'Parent',
+				items:[
+					{message:'foo'},
+					{message:'bar'}
+				]
+			}
+		})
+	</script>
+	<ul id="repeat-object" class="demo">
+		<li v-for="value in object">
+			{{value}}
+		</li>
+	</ul>
+	<ul id="repeat-object2" class="demo">
+		<li v-for="(value,key,index) in object">
+			{{index}}.{{key}}:{{value}}
+		</li>
+	</ul>
+	<script type="text/javascript">
+		new Vue({
+			el:'#repeat-object',
+			data:{
+				object:{
+					firstname:'John',
+					lastname:'Doe',
+					age:30
+				}
+			}
+		});
+		new Vue({
+			el:'#repeat-object2',
+			data:{
+				object:{
+					firstname:'John',
+					lastname:'Doe',
+					age:30
+				}
+			}
+		})
+	</script>
+	<div id="todo-list-example">
+		<input
+		  v-model="newToDoText" 
+		  v-on:keyup.enter="addNewToDo"
+		  placeholder="Add a todo"
+		>
+		<ul>
+			<li
+				is="todo-item"
+				v-for="(todo,index) in todos"
+				v-bind:title="todo"
+				v-on:remove="todos.splice(index,1)"
+			></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		Vue.component('todo-item',{
+			template:'\
+			  <li>\
+          {{title}}\
+          <button v-on:click="$emit(\'remove\')">X</button>\
+        </li>\
+			  ',
+			  props:['title']
+		})
+		new Vue({
+			el:'#todo-list-example',
+			data:{
+				newToDoText:'',
+				todos:[
+				'Do the dishes',
+				'Take out the trash',
+				'Mow the lawn'
+				]
+			},
+			methods:{
+				addNewToDo:function(){
+					this.todos.push(this.newToDoText)
+					this.newToDoText=''
+				}
+			}
+		})
+	</script>
+	<ul id = "filter">
+		<li v-for="n in eventNumbers">{{n}}</li>
+	</ul>
+	<script type="text/javascript">
+		new Vue({
+			el:'#filter',
+			data:{
+				numbers:[1,2,3,4,5,6,7,8]
+			},
+			computed:{
+				eventNumbers:function(){
+					return this.numbers.filter(function(number){
+						  return number%2 === 0
+					})
+				}
+			}
+		})
+	</script>
+	<ul id = "filter2">
+		<li v-for="n in odd(numbers)">{{n}}</li>
+	</ul>
+	<script type="text/javascript">
+		new Vue({
+			el:'#filter2',
+			data:{
+				numbers:[1,2,3,4,5,6,7,8]
+			},
+			methods:{
+				odd:function(nums){
+					return nums.filter(function(number){
+						return number%2 !== 0
+					})
+				}
+			}
+			// computed:{
+			// 	oddNumbers:function(){
+			// 		return this.numbers.filter(function(number){
+			// 			  return number%2 !== 0
+			// 		})
+			// 	}
+			// }
+		})
+	</script>
+	<!-- 以上两个例子比较computed与methods -->
+</body>
+</html>
