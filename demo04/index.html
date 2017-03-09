@@ -6,6 +6,237 @@
 	<script type="text/javascript" src="../vue.js"></script>
 </head>
 <body>
+	<div id="example-1">
+		<button v-on:click="counter += 1">add one</button>
+		<p>this button has been clicked {{counter}} times</p>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el:'#example-1',
+			data:{
+				counter:0
+			}
+		})
+	</script>
+	<div id="example-2">
+		<button v-on:click="greet">Greet</button>
+	</div>
+	<script type="text/javascript">
+		 var example2 = new Vue({
+			el:'#example-2',
+			data:{
+				name:'Vue.js'
+			},
+			methods:{
+				greet:function(event){
+					alert('Hello' + this.name +'!')
+					alert(event.target.tagName)
+				}
+			}
+		})
+
+		// example2.greet();
+	</script>
+	<br>
+	<div id="example-3">
+		<button v-on:click="say('hi')">Say hi</button>
+		<button v-on:click="warn('Form can not be submitted yet.',$event)">Submit</button>
+	</div>
+  <script type="text/javascript">
+  	new Vue({
+			el:'#example-3',
+			methods:{
+				say:function(message){
+					alert(message)
+				},
+				//$event访问原生事件对象
+				warn:function(message,event){
+					if(event) event.preventDefault()
+						alert(message)
+				}
+			}
+		})
+  </script>
+	<br>
+	<div id="example-4">
+		<input v-model = "message" placeholder="edit me">
+		<p>Message is:{{message}}</p>
+
+		<span>Multiline message is:</span>
+		<p style="white-space:pre">{{message2}}</p>
+		<textarea v-model="message2" placeholder="add multiple lines"></textarea>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el:'#example-4',
+			data:{
+				message:'',
+				message2:''
+			}
+		})
+	</script>
+
+	<br>
+	<div id="example-5">
+		<input type="checkbox" id="checkbox" v-model="checked">
+		<label for="checkbox">{{checked}}</label>
+	</div>
+		
+	<script type="text/javascript">
+		new Vue({
+			el:'#example-5',
+			data:{
+				checked:false
+			}
+		})
+	</script>
+  <br>
+	<div id="example-6">
+		<input type="checkbox" id="jack" v-model="checkedNames"  value="Jack">
+		<label for="jack">Jack</label>
+		<input type="checkbox" id="john" v-model="checkedNames" value="John">
+		<label for="john">John</label>
+		<input type="checkbox" id="mike" v-model="checkedNames" value="Mike">
+		<label for="mike">Mike</label>
+		<br>
+		<span>Checked names:{{checkedNames}}</span>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el:'#example-6',
+			data:{
+				checkedNames:[]
+			}
+		})
+	</script>
+<br>
+	<div id="example-7">
+		<input type="radio" id="one" value="One" v-model="picked">
+		<label for="one">One</label>
+		<br>
+		<input type="radio" id="two" value="Two" v-model="picked">
+		<label for="two">Two</label>
+		<br>
+		<span>picked:{{picked}}</span>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el:'#example-7',
+			data:{
+				picked:''
+			}
+		})
+	</script>
+
+	<br>
+	<div id="example-8">
+		<select v-model="selected">
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<span>Selected:{{selected}}</span>
+		<br>
+		<br>
+		<select v-model="selected2" multiple style="width: 50px">
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<br>
+		<span>Selected:{{selected2}}</span>
+		<br><br>
+		<select v-model="selected3">
+			<option v-for="option in options" v-bind:value="option.value">
+				{{option.text}}
+			</option>
+		</select>
+		<span>Selected:{{selected3}}</span>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el:'#example-8',
+			data:{
+				selected:'',
+				selected2:[],
+				selected3:'A',
+				options:[
+					{text:'One',value:'A'},
+					{text:'Two',value:'B'},
+					{text:'Three',value:'C'}
+				]
+			}
+
+		})
+	</script>
+	<!-- 当选中时，`picked` 为字符串 "a"
+  <input type="radio" v-model="picked" value="a">
+	`toggle` 为 true 或 false
+	<input type="checkbox" v-model="toggle">
+	当选中时，`selected` 为字符串 "abc"
+	<select v-model="selected">
+	  <option value="abc">ABC</option>
+	</select> -->
+	<br>
+	<div id="example-9">
+		<input type="checkbox" id="checkbox2" v-model="toggle" v-bind:true-value="a" v-bind:false-value="b">
+		<label for="checkbox2">{{toggle}}</label>
+	</div>
+		
+	<script type="text/javascript">
+		new Vue({
+			el:'#example-9',
+			data:{
+				toggle:'',
+				a:'a',
+				b:'b'
+			}
+		})
+	</script>
 	
-</body>
+  <!--  当选中时
+  vm.toggle === vm.a
+   当没有选中时
+  vm.toggle === vm.b -->
+  <br>
+	<div id="example-10">
+		<input type="radio" id="one" value="One" v-model="picked" v-bind:value="a">
+		<label for="one">One</label>
+		<br>
+		<input type="radio" id="two" value="Two" v-model="picked">
+		<label for="two">Two</label>
+		<br>
+		<span>picked:{{picked}}</span>
+	</div>
+	<script type="text/javascript">
+		new Vue({
+			el:'#example-10',
+			data:{
+				picked:'',
+				a:'a'
+			}
+		})
+	</script>
+  <!-- 当选中时
+  vm.pick === vm.a -->
+  <br>
+  <div id="example-11">
+  	<select v-model="selected">
+  		<option>1</option>
+  		<option>2</option>
+  		<option v-bind:value="{number:123}">123</option>
+  	</select>
+  	<span>Selected: {{selected}}</span>
+  </div>
+  <script type="text/javascript">
+  	new Vue({
+  		el:'#example-11',
+  		data:{
+  			selected:''
+  		}
+  	})
+  </script>
+		<!-- 当选中时
+		typeof vm.selected // -> 'object'
+		vm.selected.number // -> 123 -->
 </html>
