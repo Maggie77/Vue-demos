@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>过渡效果</title>
+	<style type="text/css">
+		.slide-fade-enter-active{
+			transition:all 0.3s ease;
+		}
+		.slide-fade-leave-active{
+			transition: all 0.8s cubic-bezier(1.0,0.5,0.8,1.0);
+		}
+		.slide-fade-enter, .slide-fade-leave-active{
+			transform:translateX(10px);
+			opacity:0;
+		}
+		.bounce-enter-active{
+			animation:bounce-in .5s;
+		}
+		.bounce-leave-active{
+			animation:bounce-out .5s 
+		}
+		@keyframes bounce-in{
+			0% {
+				transform:scale(0);
+			}
+			50%{
+				transform:scale(1.5)
+			}
+			100%{
+				transform:scale(1);
+			}
+		}
+		@keyframes bounce-out{
+			0%{
+				transform:scale(1);
+			}
+			50%{
+				transform:scale(1.5);
+			}
+			100%{
+				transform:scale(0);
+			}
+		}
+	</style>
+	<script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+	<div id="example-1">
+		<button @click="show = !show">
+			Toggle render
+		</button>
+		<transition name="slide-fade">
+			<p v-if="show">hello</p>
+		</transition>
+	</div>
+</body>
+<script type="text/javascript">
+	new Vue({
+		el:'#example-1',
+		data:{
+			show:true
+		}
+	})
+</script>
+
+<div id="example-2">
+	<button @click="show = !show">Toggle show</button>
+	<transition name="bounce">
+		<p v-if="show">Look at me!</p>
+	</transition>
+</div>
+<script type="text/javascript">
+	new Vue({
+		el:"#example-2",
+		data:{
+			show:true
+		}
+	})
+</script>
+</html>
